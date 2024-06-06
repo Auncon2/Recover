@@ -35,6 +35,7 @@ import YourSelection from "../components/YourSelection";
 
 import { useGetCustomerListQuery } from "../../Customer/api/CustomerEndPoints";
 import { useGetMeQuery } from "../../../app/api/userApi/userApi";
+import { RiDeleteBin2Fill } from "react-icons/ri";
 
 const CreateRoomBookingV2 = () => {
   const { roomId = "", from_Id, to_Id } = useParams();
@@ -126,6 +127,13 @@ const CreateRoomBookingV2 = () => {
       setFilteredRooms(filtered);
     }
   }, [Rooms, data]);
+  const Delete_Room = (id: number) => {
+    setFilteredRooms(filteredRooms.filter((room) => room.id !== id));
+      // Update the form field value
+      form.setFieldsValue({
+        room: Rooms.filter(roomId => roomId !== id)
+      });
+  };
   useEffect(() => {
     if (Rooms && data?.data) {
       const filtered = data?.data.filter((room) => Rooms.includes(room.id));
@@ -436,7 +444,9 @@ const CreateRoomBookingV2 = () => {
   useEffect(() => {
     if (isSuccess) {
       form.resetFields();
+      setFilteredRooms([]);
 
+      setTotal({});
       navigate(`/book_list`);
     }
   }, [form, isSuccess]);
@@ -513,7 +523,6 @@ const CreateRoomBookingV2 = () => {
               layout="vertical"
               autoComplete="off"
               className="w-full"
-          
             >
               <div className="flex gap-4 w-full">
                 <div className="flex flex-col w-full">
@@ -905,11 +914,19 @@ const CreateRoomBookingV2 = () => {
                         </Form.Item>
                       </Col>
                     </Row>
-                    <Row gutter={[8, 8]}>
+                    <Row gutter={[15, 15]}>
                       {filteredRooms &&
                         filteredRooms.map((room: any, index: any) => (
                           <Col xl={8} xxl={8} key={index}>
-                            <Card>
+                            <Card
+                              extra={
+                                <RiDeleteBin2Fill
+                                  color="red"
+                                  size={20}
+                                  onClick={() => Delete_Room(room.id)}
+                                />
+                              }
+                            >
                               <h3>SL: {index + 1}</h3>
                               <h3>Room ID: {room?.id}</h3>
                               <p>Room Number: {room?.room_number}</p>
@@ -929,7 +946,6 @@ const CreateRoomBookingV2 = () => {
                                   ? "Available"
                                   : "Not Available"}
                               </p>
-                              <hr />
                             </Card>
                           </Col>
                         ))}
