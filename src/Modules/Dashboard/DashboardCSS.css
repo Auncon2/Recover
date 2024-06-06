@@ -1,0 +1,23 @@
+.auto-background {
+  background-size: cover;
+  background-position: center;
+  transition: opacity 1s ease-in-out; /* Fade effect */
+}
+
+.auto-background.fade-out {
+  opacity: 0;
+}
+
+.auto-background.fade-in {
+  opacity: 1;
+}
+
+.fontcolor {
+  color: white;
+}
+
+@media only screen and (max-width: 640px) {
+  .fontcolor {
+    color: black;
+  }
+}

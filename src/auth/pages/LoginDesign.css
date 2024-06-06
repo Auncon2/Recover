@@ -1,0 +1,166 @@
+/*
+@file LoginDesign.css
+@Author Istiak <istiak.m360ict@gmail.com>
+*/
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Racing+Sans+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Basic&family=Hammersmith+One&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Racing+Sans+One&display=swap");
+.racing-sans-one-regular {
+  font-family: "Racing Sans One", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.merriweather-light {
+  font-family: "Merriweather", serif;
+  /* font-weight: 300; */
+  /* font-style: normal; */
+  font-style: italic;
+}
+.basic-regular {
+  font-family: "Basic", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.menu-sidebar {
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  min-height: 100vh;
+  background: rgb(12, 141, 45);
+  background: linear-gradient(
+    180deg,
+    rgba(12, 141, 45, 1) 0%,
+    rgba(55, 173, 68, 1) 28%,
+    rgb(172, 213, 216) 100%
+  );
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: rgb(12, 141, 45);
+  background: linear-gradient(
+    90deg,
+    rgba(12, 141, 45, 1) 0%,
+    rgba(55, 173, 68, 1) 28%,
+    rgba(255, 255, 255, 1) 100%
+  );
+}
+
+.login-form {
+  width: 100%;
+  padding: 25px;
+  background: #fff;
+  border-radius: 8px;
+}
+.login-form-container {
+  max-width: 320px;
+  min-height: 400px;
+}
+.registration-form-container {
+  max-width: 550px;
+  min-height: 500px;
+}
+.registration-form {
+  width: 100%;
+  padding: 25px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+@media screen and (max-width: 768px) {
+  .login-form {
+    padding: 0px;
+  }
+  .registration-form {
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    padding-top: 0;
+  }
+  .logo-container {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+}
+
+.button-container {
+  margin-top: 20px;
+  text-align: center;
+}
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+/* :where(.css-dev-only-do-not-override-9cgvdn).ant-input {
+  color: #0f0f0f;
+
+  background-color: #fcfcfc;
+} */
+/* ............................................................. */
+
+.login :where(.css-dev-only-do-not-override-9cgvdn).ant-input {
+  background-color: white !important;
+  color: black !important;
+}
+
+/* .login :where(.css-9cgvdn).ant-input-affix-wrapper {
+  background-color: white !important;
+  color: black !important;
+} */
+
+.login-item
+  :where(.css-dev-only-do-not-override-9cgvdn).ant-input-affix-wrapper {
+  background-color: white !important;
+}
+
+/* .login-item:where(.css-9cgvdn).ant-input {
+  background-color: white !important;
+} */
+
+.login-icon {
+  color: black !important;
+}
+
+/* .sidebar-arrow
+  :where(.css-dev-only-do-not-override-wto8vz).ant-layout
+  .ant-layout-sider-light
+  .ant-layout-sider-trigger {
+  background: #368583 !important;
+  color: #fff !important;
+} */
+
+/* .ant-layout-sider-trigger {
+  background: #368583 !important;
+  color: #fff !important;
+} */
+
+.sidebar-arrow
+  :where(.css-wto8vz).ant-layout
+  .ant-layout-sider-light
+  .ant-layout-sider-trigger {
+  background: #368583 !important;
+  color: #fff !important;
+}
+
+@media screen and (max-width: 768px) {
+  .hide-after-768 {
+    display: none;
+  }
+}
+
+.backdrop-blur-sm {
+  backdrop-filter: blur(100px);
+}

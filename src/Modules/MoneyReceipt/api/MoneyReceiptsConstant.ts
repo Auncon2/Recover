@@ -1,0 +1,5 @@
+export const MONEYRECEIPT = "MONEYRECEIPT_INFO";
+export const MONEYRECEIPT_Tag = ["MONEYRECEIPT_Info"];
+
+export const ADVANCERETURN = "ADVANCERETURN_INFO";
+export const ADVANCERETURN_Tag = ["ADVANCERETURN_Info"];

@@ -1,0 +1,264 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+* {
+  margin: 0;
+  box-sizing: 0;
+}
+
+.g_loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form-forgot {
+  float: right;
+}
+.login-form-button {
+  width: 100%;
+  margin-bottom: 10px;
+}
+@media (max-width: 767px) {
+  .login_form_card {
+    background-color: #cae3f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+  .login_form_single_card {
+    background-color: #ffffff;
+    padding: 24px;
+    /* margin: 15px; */
+    border-radius: 8px;
+  }
+  .login_form_image {
+    display: none !important;
+  }
+}
+@media (min-width: 768px) {
+  .login_form_card {
+    width: 52%;
+    height: 80vh;
+    border-radius: 12px;
+    background-color: #cae3f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+  .login_form_single_card {
+    /* background-color: #ffffff; */
+    padding: 30px;
+    margin: 15px;
+    border-radius: 12px;
+  }
+}
+
+.ant-layout-sider-children {
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+/* Google chrome  */
+.ant-layout-sider-children::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
+}
+.ant-layout-sider-children {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.resize-handle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 100%;
+  cursor: ew-resize;
+  transition: opacity 0.2s;
+  z-index: 1;
+}
+
+/* @font-face {
+    font-family: Imported;
+    src: url(./components/assets/Rubik-Regular.ttf);
+  } */
+#root {
+  font-family: Imported;
+}
+/* CUSTOM CSS @test purpose */
+/* .border {
+	background-color: #7a7a7a1a;
+	border-radius: 7px;
+} */
+
+.p-2 {
+  padding: 5px;
+}
+
+.p-5 {
+  padding: 10px;
+}
+
+.p-10 {
+  padding: 20px;
+}
+
+.my-10 {
+  margin: 20px 0;
+}
+.my-20 {
+  margin: 40px 0;
+}
+
+.mt-5 {
+  margin-top: 10px;
+}
+
+.mt-10 {
+  margin-top: 20px;
+}
+
+.mb-10 {
+  margin-bottom: 20px;
+}
+
+.mt-20 {
+  margin-top: 40px;
+}
+
+.text_white {
+  color: #fff;
+}
+
+/* range picker  */
+
+@media (max-width: 480px) {
+  .ant-calendar-range {
+    width: 320px;
+  }
+  .ant-calendar-range-part {
+    width: 100%;
+  }
+}
+
+/* range picker  */
+
+@media (max-width: 500px) {
+  .ant-picker-dropdown .ant-picker-panel-container .ant-picker-panels {
+    display: inline-flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.ant-popover-inner {
+  margin-right: 10px;
+}
+/* * width */
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+@media (max-width: 768px) {
+  .hide-on-small {
+    display: none;
+  }
+}
+
+.notification-div {
+  cursor: pointer;
+}
+.notification-div:hover {
+  background-color: rgb(235, 233, 233);
+  color: white;
+  padding-left: 5px;
+}
+
+.custom-list {
+  padding: 5px 0px !important;
+}
+/* button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  background-color: none !important;
+  background-image: none;
+} */
+/* :where(.css-dev-only-do-not-override-wto8vz).ant-btn-primary {
+  color: #fff;
+  background-color: #01adad !important;
+  
+  box-shadow: none !important;
+} */
+
+:where(.css-wto8vz).ant-btn-primary {
+  color: #fff;
+  background-color: #01adad !important;
+
+  box-shadow: none !important;
+}
+
+.ant-menu-item {
+  color: white !important;
+  font-weight: 400;
+}
+
+.ant-menu-title-content {
+  color: white !important;
+  font-weight: 400;
+}
+
+.ant-menu-item-icon {
+  color: white !important;
+}
+
+.ant-menu-item-selected {
+  background-color: #01adad !important;
+  color: white !important;
+}
+
+.ant-menu-submenu-arrow::before {
+  color: white !important;
+}
+.ant-menu-submenu-arrow::after {
+  color: white !important;
+}
