@@ -925,7 +925,7 @@ const CreateRoomBookingV2 = () => {
                     <Row gutter={[15, 15]}>
                       {filteredRooms &&
                         filteredRooms.map((room: any, index: any) => (
-                          <Col xl={8} xxl={8} key={index}>
+                          <Col md={24} lg={12} xl={12} xxl={8} key={index}>
                             <Badge.Ribbon
                               text={<h3>Room: {index + 1}</h3>}
                               color="cyan"
