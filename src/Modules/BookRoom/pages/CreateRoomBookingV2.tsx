@@ -1,4 +1,4 @@
-import { HomeOutlined, PlusOutlined } from "@ant-design/icons";
+import { HomeOutlined } from "@ant-design/icons";
 import {
   Badge,
   Breadcrumb,
@@ -14,6 +14,7 @@ import {
   RadioChangeEvent,
   Row,
   Select,
+  Tag,
   message,
 } from "antd";
 
@@ -27,7 +28,7 @@ import { useGetAvailableHotelRoomListQuery } from "../../RoomModule/api/HotelRoo
 import { useCreateRoomBookingMutation } from "../api/RoomBookingEndPoints";
 import { useGetAccountListQuery } from "../../Account/api/AccountEndPoint";
 
-import { FaHotel } from "react-icons/fa6";
+import { FaHotel, FaMoneyBillWave } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
 
 import moment from "moment";
@@ -36,6 +37,7 @@ import YourSelection from "../components/YourSelection";
 import { useGetCustomerListQuery } from "../../Customer/api/CustomerEndPoints";
 import { useGetMeQuery } from "../../../app/api/userApi/userApi";
 import { RiDeleteBin2Fill } from "react-icons/ri";
+import { MdPeopleAlt } from "react-icons/md";
 
 const CreateRoomBookingV2 = () => {
   const { roomId = "", from_Id, to_Id } = useParams();
@@ -128,11 +130,11 @@ const CreateRoomBookingV2 = () => {
     }
   }, [Rooms, data]);
   const Delete_Room = (id: number) => {
-    setFilteredRooms(filteredRooms.filter((room) => room.id !== id));
-      // Update the form field value
-      form.setFieldsValue({
-        room: Rooms.filter(roomId => roomId !== id)
-      });
+    setFilteredRooms(filteredRooms.filter((room: any) => room.id !== id));
+    // Update the form field value
+    form.setFieldsValue({
+      room: Rooms.filter((roomId: number) => roomId !== id),
+    });
   };
   useEffect(() => {
     if (Rooms && data?.data) {
@@ -178,8 +180,14 @@ const CreateRoomBookingV2 = () => {
       );
 
       setGuestEmailList(filteredGuestData?.name);
+    } else if (PHONE && guestlist?.data) {
+      const filteredGuestData = guestlist?.data.find(
+        (item: any) => item?.phone === PHONE
+      );
+
+      setGuestEmailList(filteredGuestData?.name);
     }
-  }, [EMAIL, guestlist?.data]);
+  }, [EMAIL, PHONE, guestlist?.data]);
 
   useEffect(() => {
     if (roomId != "make-booking" && data?.data) {
@@ -195,10 +203,10 @@ const CreateRoomBookingV2 = () => {
     if (data) {
       const roomTypeList =
         data?.data?.map((value: any, index: any) => ({
-          value: value.id,
-          label: value.room_number,
-          id: value.id,
-          key: `room_${value.room_type}_${index}`,
+          value: value?.id,
+          label: `${value?.room_number} - (${value?.room_type} - ${value?.bed_type})`,
+          id: value?.id,
+          key: `room_${value?.room_type}_${index}`,
         })) || [];
       setRoomTypeList(roomTypeList);
     }
@@ -232,18 +240,7 @@ const CreateRoomBookingV2 = () => {
       );
 
       setTotal({
-        check_in_time: date,
-        check_out_time: date_out,
-        email: EMAIL,
-        name: NAME,
-        phone: PHONE,
-        nid: NID_NO,
-        passport: PASSPORT_NO,
-        inputOccupancy: TOTAL_OCCUPANCY,
-        tax: TAX_AMOUNT,
-        discount: DISCOUNT_AMOUNT,
-        extraCharge: EXTRA_CHARGE,
-        modeOfPayment: Payment,
+        ...total,
         totalAdults: totalAdults,
         totalChildren: totalChildren,
         totalRatePerNight: totalRatePerNight,
@@ -265,8 +262,29 @@ const CreateRoomBookingV2 = () => {
       });
     }
   }, [
+    total,
     filteredRooms,
     numberOfNights,
+    TAX_AMOUNT,
+    DISCOUNT_AMOUNT,
+    EXTRA_CHARGE,
+  ]);
+  useEffect(() => {
+    setTotal({
+      check_in_time: date,
+      check_out_time: date_out,
+      email: EMAIL,
+      name: NAME,
+      phone: PHONE,
+      nid: NID_NO,
+      passport: PASSPORT_NO,
+      inputOccupancy: TOTAL_OCCUPANCY,
+      tax: TAX_AMOUNT,
+      discount: DISCOUNT_AMOUNT,
+      extraCharge: EXTRA_CHARGE,
+      modeOfPayment: Payment,
+    });
+  }, [
     TAX_AMOUNT,
     EXTRA_CHARGE,
     DISCOUNT_AMOUNT,
@@ -308,21 +326,18 @@ const CreateRoomBookingV2 = () => {
   }, [form, guestEmail]);
   useEffect(() => {
     form.setFieldsValue({
-      // discount_amount_full: sum?.totaldiscountAmmount,
       discount_amount_full: 0,
       tax_amount_full: 0,
-      paid_amount_full: 0,
+      paid_amount_full: Number(total?.totalRoomCharge),
     });
-  }, [form]);
+  }, [form, total]);
   useEffect(() => {
     form.setFieldsValue({
-      // discount_amount_full: sum?.totaldiscountAmmount,
       discount_amount_partial: 0,
       tax_amount_partial: 0,
       paid_amount_partial: 0,
     });
   }, [form]);
-  // [form, sum?.totaldiscountAmmount]);
 
   const onFinish = (values: any) => {
     console.log("values");
@@ -466,8 +481,8 @@ const CreateRoomBookingV2 = () => {
       });
     } else if (roomId === "make-booking") {
       form.setFieldsValue({
-        check_in_time: "",
-        check_out_time: "",
+        check_in_time: dayjs().startOf("day"),
+        check_out_time: dayjs().endOf("day"),
         room: [],
       });
     }
@@ -891,7 +906,7 @@ const CreateRoomBookingV2 = () => {
                       <Col xs={24} sm={24} md={24} lg={24}>
                         <Form.Item
                           label={
-                            <span className="font-semibold">Select Room</span>
+                            <span className="font-semibold">Select Rooms</span>
                           }
                           name="room"
                           style={{ width: "100%" }}
@@ -918,35 +933,69 @@ const CreateRoomBookingV2 = () => {
                       {filteredRooms &&
                         filteredRooms.map((room: any, index: any) => (
                           <Col xl={8} xxl={8} key={index}>
-                            <Card
-                              extra={
-                                <RiDeleteBin2Fill
-                                  color="red"
-                                  size={20}
-                                  onClick={() => Delete_Room(room.id)}
-                                />
-                              }
+                            <Badge.Ribbon
+                              text={<h3>Room: {index + 1}</h3>}
+                              color="cyan"
+                              placement="start"
                             >
-                              <h3>SL: {index + 1}</h3>
-                              <h3>Room ID: {room?.id}</h3>
-                              <p>Room Number: {room?.room_number}</p>
-                              <p>Room Type: {room?.room_type}</p>
-                              <p>Bed Type: {room?.bed_type}</p>
-                              <p>
-                                Refundable: {room?.refundable ? "Yes" : "No"}
-                              </p>
-                              <p>Rate Per Night: {room?.rate_per_night}</p>
-                              <p>Discount: {room?.discount ? "Yes" : "No"}</p>
-                              <p>Discount Percent: {room?.discount_percent}%</p>
-                              <p>Child: {room?.child}</p>
-                              <p>Adult: {room?.adult}</p>
-                              <p>
-                                Availability:{" "}
-                                {room?.availability
-                                  ? "Available"
-                                  : "Not Available"}
-                              </p>
-                            </Card>
+                              <Card
+                                extra={
+                                  <RiDeleteBin2Fill
+                                    color="red"
+                                    size={20}
+                                    onClick={() => Delete_Room(room.id)}
+                                  />
+                                }
+                              >
+                                <div className="flex flex-col gap-1">
+                                  <p
+                                    className="text-lg font-bold
+                                  
+                                  "
+                                  >
+                                    {room?.room_number}
+                                  </p>
+                                  <div className="flex gap-2 items-baseline text-base font-bold">
+                                    <span>{room?.room_type}</span>
+                                    <span>-</span>
+                                    <span>{room?.bed_type}</span>
+                                  </div>
+
+                                  <div className="flex gap-2 items-center text-base font-bold">
+                                    <span>
+                                      <MdPeopleAlt />
+                                    </span>
+                                    <span className="font-semibold">
+                                      Max {room?.adult} Adluts | {room?.child}{" "}
+                                      child Per Room
+                                    </span>
+                                  </div>
+
+                                  <div className="flex items-center gap-2 text-base font-bold">
+                                    <span>
+                                      <FaMoneyBillWave />
+                                    </span>
+                                    <span>Rate Per Night</span>
+                                    <span className="font-bold">-</span>
+                                    <span className=" text-slate-500">
+                                      {room?.rate_per_night &&
+                                        room?.rate_per_night?.toLocaleString()}
+                                    </span>
+                                  </div>
+
+                                  <div className="flex gap-2 text-base font-bold">
+                                    <span>
+                                      {room?.refundable &&
+                                      room?.refundable === 1 ? (
+                                        <Tag color="green">Refundable</Tag>
+                                      ) : (
+                                        <Tag color="red">Non-refundable</Tag>
+                                      )}
+                                    </span>
+                                  </div>
+                                </div>
+                              </Card>
+                            </Badge.Ribbon>
                           </Col>
                         ))}
                     </Row>
@@ -955,7 +1004,7 @@ const CreateRoomBookingV2 = () => {
                   {/* ..........................Partial/Full payment............................................................................. */}
                   {form.getFieldValue("payment_method") === 0 ||
                   form.getFieldValue("payment_method") === 2 ? (
-                    <Card style={{ marginBottom: "20px" }}>
+                    <Card style={{ marginBottom: "20px", marginTop: "20px" }}>
                       <div className="flex justify-start  gap-4 border-b-2 border-[#01adad] mb-7 ">
                         <span className=" py-2 text-[#2d9292] font-semibold">
                           {form.getFieldValue("payment_method") === 0
@@ -1021,6 +1070,11 @@ const CreateRoomBookingV2 = () => {
                                 }
                                 placeholder="Enter paid ammount in"
                                 style={{ width: "100%" }}
+                                disabled={
+                                  form.getFieldValue("payment_method") === 0
+                                    ? false
+                                    : true
+                                }
                               />
                             </Form.Item>
                           </Col>

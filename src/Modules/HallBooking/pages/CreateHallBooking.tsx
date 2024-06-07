@@ -17,7 +17,7 @@ import {
   TimePicker,
   message,
 } from "antd";
-// const { RangePicker } = DatePicker;
+
 import { useForm, useWatch } from "antd/es/form/Form";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
@@ -26,7 +26,7 @@ import { useGetAccountListQuery } from "../../Account/api/AccountEndPoint";
 import { FaHotel } from "react-icons/fa6";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { RiQuestionFill } from "react-icons/ri";
-// import "./RoomBooking.css";
+
 import { useGetPaymentlistQuery } from "../../Payment/api/PaymentMethodEndPoint";
 import { useCreateHallBookingMutation } from "../api/HallBookingEndPoints";
 import moment from "moment";
