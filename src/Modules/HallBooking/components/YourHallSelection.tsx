@@ -2,17 +2,11 @@ import { Card, Divider } from "antd";
 import dayjs from "dayjs";
 
 const YourHallSelection = ({
+  total,
+  totalV2,
   start_date,
   end_time,
-  bookList,
-  form,
-  roomHistoryList,
-  sum,
   differenceInHours,
-  tax_amount,
-  discount_amount,
-  updatedHallBooking,
-  totalCapacity,
 }: // roomId,
 any) => {
   return (
@@ -44,24 +38,24 @@ any) => {
           <div className="flex justify-between items-baseline">
             <span className="font-bold">Guest Name</span>
             <span className="font-bold"></span>
-            <span className="">{bookList?.name ? bookList?.name : "-"}</span>
+            <span className="">{totalV2?.name ? totalV2?.name : "-"}</span>
           </div>
           <div className="flex justify-between items-baseline">
             <span className=" font-bold">E-mail</span>
             <span className="font-bold"></span>
-            <span className=" ">{bookList?.email ? bookList?.email : "-"}</span>
+            <span className=" ">{totalV2?.email ? totalV2?.email : "-"}</span>
           </div>
           <div className="flex justify-between items-baseline">
             <span className=" font-bold">Phone</span>
             <span className="font-bold"></span>
-            <span className=" ">{bookList?.phone ? bookList?.phone : "-"}</span>
+            <span className=" ">{totalV2?.phone ? totalV2?.phone : "-"}</span>
           </div>
           <div className="flex justify-between items-baseline">
             <span className=" font-bold">Booking Date</span>
             <span className="font-bold"></span>
             <span className="">
-              {bookList?.booking_date
-                ? dayjs(bookList?.booking_date).format("DD-MM-YYYY")
+              {totalV2?.booking_date
+                ? dayjs(totalV2?.booking_date).format("DD-MM-YYYY")
                 : "-"}
             </span>
           </div>
@@ -70,122 +64,88 @@ any) => {
             <span className="font-bold"></span>
             <span className="">
               <span className="">
-                {bookList?.event_date
-                  ? dayjs(bookList?.event_date).format("DD-MM-YYYY")
+                {totalV2?.event_date
+                  ? dayjs(totalV2?.event_date).format("DD-MM-YYYY")
                   : "-"}
               </span>
             </span>
           </div>
 
-          {form.getFieldValue("payment_method") === "0" ? (
-            <>
-              <div className="flex justify-between items-baseline">
-                <span className=" font-bold">Discount Amount</span>
-                <span className="font-bold"></span>
-                <span className="">
-                  {bookList?.discount_amount ? bookList?.discount_amount : 0}
-                </span>
-              </div>
-              <div className="flex justify-between items-baseline">
-                <span className="text-base font-bold">Tax Amount</span>
-                <span className="font-bold"></span>
-                <span className=" ">
-                  {bookList?.tax_amount ? bookList?.tax_amount : 0}
-                </span>
-              </div>
-              <div className="flex justify-between items-baseline">
+          <div className="flex justify-between items-baseline">
+            <span className=" font-bold">Discount Amount</span>
+            <span className="font-bold"></span>
+            <span className="">
+              {totalV2?.discount ? totalV2?.discount : 0}
+            </span>
+          </div>
+          <div className="flex justify-between items-baseline">
+            <span className="text-base font-bold">Tax Amount</span>
+            <span className="font-bold"></span>
+            <span className=" ">{totalV2?.tax ? totalV2?.tax : 0}</span>
+          </div>
+          {/* <div className="flex justify-between items-baseline">
                 <span className=" font-bold">Paid Amount</span>
                 <span className="font-bold"></span>
                 <span className=" ">
-                  {bookList?.paid_amount ? bookList?.paid_amount : 0}
+                {totalV2?.tax ? totalV2?.tax : 0}
                 </span>
-              </div>
-              <div className="flex justify-between items-baseline">
-                <span className=" font-bold">Payment Type</span>
-                <span className="font-bold"></span>
-                <span className=" ">
-                  {bookList?.payment_type ? bookList?.payment_type : "-"}
-                </span>
-              </div>
-            </>
-          ) : (
-            ""
-          )}
+              </div> */}
+          {/* <div className="flex justify-between items-baseline">
+            <span className=" font-bold">Payment Type</span>
+            <span className="font-bold"></span>
+            <span className=" ">
+              {bookList?.payment_type ? bookList?.payment_type : "-"}
+            </span>
+          </div> */}
 
           <div className="flex justify-between items-baseline">
             <span className=" font-bold">Total no of guests</span>
             <span className="font-bold"></span>
             <span className="">
-              {bookList?.total_occupancy ? bookList?.total_occupancy : 0}
+              {total?.totalCapacity ? total?.totalCapacity : 0}
             </span>
           </div>
         </div>
         <Divider />
         <div className="mt-10">
           <div className="flex justify-center text-base font-bold mb-5">
-            {roomHistoryList.length === 1 || roomHistoryList.length === 0 ? (
+            {total?.allSelectedHalls && total?.allSelectedHalls.length <= 1 ? (
               <span>Selected Hall</span>
             ) : (
               <span>List Of Selected Halls</span>
             )}
           </div>
-          {roomHistoryList.length > 0 ? (
-            <>
-              {roomHistoryList?.map((value: any, index: number) => (
-                <div
-                  className="grid gap-5 mt-5 border-b-2 border-dotted border-slate-300 pb-4"
-                  key={index}
-                >
-                  <div className="flex flex-col gap-1">
-                    <div className="flex gap-2 items-baseline">
-                      <span className="text-base font-bold">
-                        {index + 1} {value.hall_name}
-                      </span>
-                    </div>
 
-                    <span className="text-slate-600 font-semibold ml-3">
-                      Max capacity {value.capacity}
-                    </span>
-                  </div>
+          {total?.allSelectedHalls?.map((value: any, index: number) => (
+            <div
+              className="grid gap-5 mt-5 border-b-2 border-dotted border-slate-300 pb-4"
+              key={index}
+            >
+              <div className="flex flex-col gap-1">
+                <div className="flex gap-2 items-baseline">
+                  <span className="text-base font-bold">
+                    {index + 1} {value.hall_name}
+                  </span>
                 </div>
-              ))}
-            </>
-          ) : (
-            <>
-              {updatedHallBooking?.map((value: any, index: number) => (
-                <div
-                  className="grid gap-5 mt-5 border-b-2 border-dotted border-slate-300 pb-4"
-                  key={index}
-                >
-                  <div className="flex flex-col gap-1">
-                    <div className="flex gap-2 items-baseline">
-                      <span className="text-base font-bold">
-                        {index + 1} {value.hall_name}
-                      </span>
-                    </div>
 
-                    <span className="text-slate-600 font-semibold ml-3">
-                      Max capacity {value.capacity}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </>
-          )}
-          {/* <div
-            className={`flex justify-between font-semibold text-fuchsia-500 mt-2 ${
-              bookList?.total_occupancy > sum?.totalGuest ? "animate-pulse" : ""
-            }`}
-          ></div> */}
+                <span className="text-slate-600 font-semibold ml-3">
+                  Max capacity {value.capacity}
+                </span>
+              </div>
+            </div>
+          ))}
+
           <div className="flex justify-between mt-2">
             <span className="font-semibold">Total no. of Halls</span>
 
-            <span>{roomHistoryList > 0 ? roomHistoryList.length : 1}</span>
+            <span>
+              {total?.allSelectedHalls ? total?.allSelectedHalls.length : 0}
+            </span>
           </div>
           <div className="flex justify-between font-semibold mt-2">
             <span className="font-semibold">Total Hall Capacity</span>
             <span>
-              {sum?.totalCapacity ? sum?.totalCapacity : totalCapacity}
+              {total?.totalCapacity ? total?.totalCapacity : 0}
               People
             </span>
           </div>
@@ -197,34 +157,36 @@ any) => {
           <div className="flex justify-between font-semibold mt-2 border-b">
             <span className="font-semibold">Total Hall Cost </span>
             <span>
-              {sum?.totalHallCost ? sum?.totalHallCost.toLocaleString() : 0}
+              {total?.totalSelectedRoomCharge
+                ? total?.totalSelectedRoomCharge.toLocaleString()
+                : 0}
             </span>
           </div>
           <div className="flex justify-between font-semibold mt-2 border-b">
             <span className="font-semibold">Extra Charge</span>
             <span>
               +
-              {bookList?.extra_charge
-                ? bookList?.extra_charge.toLocaleString()
+              {totalV2?.extraCharge
+                ? totalV2?.extraCharge?.toLocaleString()
                 : 0}
             </span>
           </div>
           <div className="flex justify-between font-semibold mt-2 border-b">
             <span className="font-semibold">Tax Amount</span>
-            <span>+{tax_amount ? tax_amount.toLocaleString() : 0}</span>
+            <span>+ {totalV2?.tax ? totalV2?.tax?.toLocaleString() : 0}</span>
           </div>
           <div className="flex justify-between font-semibold mt-2 border-b-2 pb-2">
             <span className="font-semibold">Discount Amount</span>
             <span>
-              -{discount_amount ? discount_amount.toLocaleString() : 0}
+              - {totalV2?.discount ? totalV2?.discount?.toLocaleString() : 0}
             </span>
           </div>
           <div className="flex justify-between font-semibold mt-2 ">
             <span className="font-semibold">Total Cost </span>
             <span>
-              {(
-                (sum?.totalPriceCost ?? 0) + (bookList?.totalPriceCost ?? 0)
-              ).toLocaleString()}
+              {total?.totalHallCharge
+                ? total?.totalHallCharge?.toLocaleString()
+                : 0}
             </span>
           </div>
         </div>

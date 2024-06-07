@@ -2,7 +2,7 @@ import { Card, Divider } from "antd";
 
 import dayjs from "dayjs";
 
-const YourSelection = ({ total, numberOfNights }: any) => {
+const YourSelection = ({ total, totalV2, numberOfNights }: any) => {
   return (
     <>
       <Card
@@ -23,12 +23,12 @@ const YourSelection = ({ total, numberOfNights }: any) => {
 
         <div className="flex justify-between text-sm 2xl:text-base">
           <span className="text-base">
-            {total?.check_in_time &&
-              dayjs(total?.check_in_time).format("DD-MM-YYYY (hh:mm a)")}
+            {totalV2?.check_in_time &&
+              dayjs(totalV2?.check_in_time).format("DD-MM-YYYY (hh:mm a)")}
           </span>
           <span className="text-sm 2xl:text-base">
-            {total?.check_out_time &&
-              dayjs(total?.check_out_time).format("DD-MM-YYYY (hh:mm a)")}
+            {totalV2?.check_out_time &&
+              dayjs(totalV2?.check_out_time).format("DD-MM-YYYY (hh:mm a)")}
           </span>
         </div>
 
@@ -37,28 +37,28 @@ const YourSelection = ({ total, numberOfNights }: any) => {
             <span className="font-bold">Guest Name</span>
             <span className="font-bold"></span>
 
-            <span>{total?.name ? total?.name : "-"}</span>
+            <span>{totalV2?.name ? totalV2?.name : "-"}</span>
           </div>
           <div className="flex justify-between items-baseline ">
             <span className=" font-bold">E-mail</span>
             <span className="font-bold"></span>
 
-            <span>{total?.email ? total?.email : "-"}</span>
+            <span>{totalV2?.email ? totalV2?.email : "-"}</span>
           </div>
           <div className="flex justify-between items-baseline ">
             <span className=" font-bold  ">Phone No.</span>
             <span className="font-bold"></span>
-            <span>{total?.phone ? total?.phone : "-"}</span>
+            <span>{totalV2?.phone ? totalV2?.phone : "-"}</span>
           </div>
           <div className="flex justify-between items-baseline ">
             <span className=" font-bold  ">NID No.</span>
 
-            <span>{total?.nid ? total?.nid : "-"}</span>
+            <span>{totalV2?.nid ? totalV2?.nid : "-"}</span>
           </div>
           <div className="flex justify-between items-baseline text-sm 2xl:text-base">
             <span className=" font-bold">Passport No. / Iqama No.</span>
 
-            <span>{total?.passport ? total?.passport : "-"}</span>
+            <span>{totalV2?.passport ? totalV2?.passport : "-"}</span>
           </div>
 
           <div className="flex justify-between items-baseline text-sm 2xl:text-base">
@@ -67,16 +67,16 @@ const YourSelection = ({ total, numberOfNights }: any) => {
             </span>
             <span className="font-bold"></span>
             <span className="">
-              <span>{total?.inputOccupancy ? total?.inputOccupancy : "-"}</span>
+              <span>
+                {totalV2?.inputOccupancy ? totalV2?.inputOccupancy : "-"}
+              </span>
             </span>
           </div>
         </div>
         <Divider />
         <div className="mt-10">
           <div className="flex justify-center text-base font-bold mb-5">
-            {total?.allSelectedRooms &&
-              total?.allSelectedRooms.length <= 1
-            ? (
+            {total?.allSelectedRooms && total?.allSelectedRooms.length <= 1 ? (
               <span>Selected Room</span>
             ) : (
               <span>List Of Selected Rooms</span>
@@ -152,37 +152,37 @@ const YourSelection = ({ total, numberOfNights }: any) => {
 
           <div className="flex justify-between font-semibold mt-2 border-b-2 pb-2 text-sm 2xl:text-base">
             <span className="font-semibold">Payment Mode</span>
-            {total?.modeOfPayment === 0 ||
-            total?.modeOfPayment === 2 ||
-            total?.modeOfPayment === 1 ? (
+            {totalV2?.modeOfPayment === 0 ||
+            totalV2?.modeOfPayment === 2 ||
+            totalV2?.modeOfPayment === 1 ? (
               <>
-                {total?.modeOfPayment === 0 && <span>Partial Payment</span>}
-                {total?.modeOfPayment === 2 && <span>Full Payment</span>}
-                {total?.modeOfPayment === 1 && <span>No Payment</span>}
+                {totalV2?.modeOfPayment === 0 && <span>Partial Payment</span>}
+                {totalV2?.modeOfPayment === 2 && <span>Full Payment</span>}
+                {totalV2?.modeOfPayment === 1 && <span>No Payment</span>}
               </>
             ) : (
               "Select Payment Mode"
             )}
           </div>
 
-          {(total?.check_in_time &&
-            total?.check_out_time &&
-            total?.modeOfPayment === 0) ||
-          total?.modeOfPayment === 2 ||
-          total?.modeOfPayment === 1 ? (
+          {(totalV2?.check_in_time &&
+            totalV2?.check_out_time &&
+            totalV2?.modeOfPayment === 0) ||
+          totalV2?.modeOfPayment === 2 ||
+          totalV2?.modeOfPayment === 1 ? (
             <>
               <div className="flex justify-between font-semibold mt-2 border-b-2 pb-2 text-sm 2xl:text-base">
                 <span className="font-semibold">Extra Charge</span>
-                <span>+{total?.extraCharge ? total?.extraCharge : 0}</span>
+                <span>+{totalV2?.extraCharge ? totalV2?.extraCharge : 0}</span>
               </div>
               <div className="flex justify-between font-semibold mt-2 border-b-2 pb-2 text-sm 2xl:text-base">
                 <span className="font-semibold">Tax Amount</span>
-                <span>+{total?.tax ? total?.tax : 0}</span>
+                <span>+{totalV2?.tax ? totalV2?.tax : 0}</span>
               </div>
               <div className="flex justify-between font-semibold mt-2 border-b-2 pb-2 text-sm 2xl:text-base">
                 <span className="font-semibold">Discount Amount</span>
 
-                <span>+{total?.discount ? total?.discount : 0}</span>
+                <span>+{totalV2?.discount ? totalV2?.discount : 0}</span>
               </div>
               <div className="flex justify-between font-semibold mt-2 border-b-2 pb-2 text-sm 2xl:text-base">
                 <span className="font-semibold">

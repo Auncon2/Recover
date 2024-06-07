@@ -62,7 +62,6 @@ const CreateRoomBookingV2 = () => {
   const [bankList, setBankTypeList] = useState<any>([]);
 
   const [bookingId, setBookingList] = useState<any>(null);
-  const [guestEmail, setGuestEmailList] = useState<any>(null);
 
   const [filteredRooms, setFilteredRooms] = useState<any[]>([]);
   const [total, setTotal] = useState<any>({
@@ -71,6 +70,9 @@ const CreateRoomBookingV2 = () => {
     totalRatePerNight: 0,
     totalOccupancy: 0,
     totalRoomCharge: 0,
+  });
+  const [totalV2, setTotalV2] = useState<any>({
+
   });
 
   const [filter, setFilter] = useState<any>({
@@ -179,13 +181,23 @@ const CreateRoomBookingV2 = () => {
         (item: any) => item?.email === EMAIL
       );
 
-      setGuestEmailList(filteredGuestData?.name);
+      if (filteredGuestData && filteredGuestData?.name) {
+        const guestEMAIL = filteredGuestData?.name;
+        form.setFieldValue("name", guestEMAIL);
+      } else {
+        form.setFieldValue("name", "");
+      }
     } else if (PHONE && guestlist?.data) {
       const filteredGuestData = guestlist?.data.find(
         (item: any) => item?.phone === PHONE
       );
 
-      setGuestEmailList(filteredGuestData?.name);
+      if (filteredGuestData && filteredGuestData?.name) {
+        const guestName = filteredGuestData?.name;
+        form.setFieldValue("name", guestName);
+      } else {
+        form.setFieldValue("name", "");
+      }
     }
   }, [EMAIL, PHONE, guestlist?.data]);
 
@@ -225,7 +237,7 @@ const CreateRoomBookingV2 = () => {
     }
   }, [accountlistData]);
   useEffect(() => {
-    if (filteredRooms && filteredRooms.length > 0) {
+    if (filteredRooms) {
       const totalAdults = filteredRooms.reduce(
         (sum, room) => sum + room?.adult,
         0
@@ -240,7 +252,6 @@ const CreateRoomBookingV2 = () => {
       );
 
       setTotal({
-        ...total,
         totalAdults: totalAdults,
         totalChildren: totalChildren,
         totalRatePerNight: totalRatePerNight,
@@ -262,7 +273,6 @@ const CreateRoomBookingV2 = () => {
       });
     }
   }, [
-    total,
     filteredRooms,
     numberOfNights,
     TAX_AMOUNT,
@@ -270,7 +280,7 @@ const CreateRoomBookingV2 = () => {
     EXTRA_CHARGE,
   ]);
   useEffect(() => {
-    setTotal({
+    setTotalV2({
       check_in_time: date,
       check_out_time: date_out,
       email: EMAIL,
@@ -303,38 +313,20 @@ const CreateRoomBookingV2 = () => {
     if (accountlistData?.data?.length) {
       const accountId = Number(accountlistData?.data[0]?.id);
       form.setFieldValue("ac_tr_ac_id_full", accountId);
-    } else if (accountlistData?.data?.length === 0) {
-      form.resetFields(["ac_tr_ac_id_full"]);
-    }
-  }, [form, accountlistData?.data]);
-  useEffect(() => {
-    if (accountlistData?.data?.length) {
-      const accountId = Number(accountlistData?.data[0]?.id);
       form.setFieldValue("ac_tr_ac_id_partial", accountId);
     } else if (accountlistData?.data?.length === 0) {
+      form.resetFields(["ac_tr_ac_id_full"]);
       form.resetFields(["ac_tr_ac_id_partial"]);
     }
   }, [form, accountlistData?.data]);
 
   useEffect(() => {
-    if (guestEmail) {
-      const guestEMAIL = guestEmail;
-      form.setFieldValue("name", guestEMAIL);
-    } else {
-      form.setFieldValue("name", "");
-    }
-  }, [form, guestEmail]);
-  useEffect(() => {
     form.setFieldsValue({
-      discount_amount_full: 0,
-      tax_amount_full: 0,
       paid_amount_full: Number(total?.totalRoomCharge),
     });
   }, [form, total]);
   useEffect(() => {
     form.setFieldsValue({
-      discount_amount_partial: 0,
-      tax_amount_partial: 0,
       paid_amount_partial: 0,
     });
   }, [form]);
@@ -462,6 +454,7 @@ const CreateRoomBookingV2 = () => {
       setFilteredRooms([]);
 
       setTotal({});
+      setTotalV2({})
       navigate(`/book_list`);
     }
   }, [form, isSuccess]);
@@ -919,7 +912,7 @@ const CreateRoomBookingV2 = () => {
                           <Select
                             mode="multiple"
                             showSearch
-                            placeholder="Select a room "
+                            placeholder="Select a Room / Select Rooms"
                             optionFilterProp="children"
                             onSearch={onSearch}
                             filterOption={filterOption}
@@ -1200,7 +1193,7 @@ const CreateRoomBookingV2 = () => {
           </div>
         </div>
         {/* ..........................Your Selection............................................................... */}
-        <YourSelection total={total} numberOfNights={numberOfNights} />
+        <YourSelection total={total} numberOfNights={numberOfNights} totalV2={totalV2}/>
       </div>
     </>
   );
